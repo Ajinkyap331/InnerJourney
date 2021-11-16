@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert, Image, ScrollView } from 'react-native';
 import { RadioButton } from 'react-native-paper';
-import * as firebase from 'firebase';
+import firebase from "firebase"
 import { firebaseConfig } from './config'
 import logo from './logo.jpeg'
 
@@ -11,10 +11,12 @@ if (!firebase.apps.length) {
   firebase.app(); // if already initialized, use that one
 }
 
+var database = firebase.database()
 
 export default class App extends Component {
   constructor() {
     super()
+
     this.state = {
       isSelected: 'Zoom',
       Roll_No: "",
@@ -23,8 +25,9 @@ export default class App extends Component {
 
   validate = (str) => {
     if (str.indexOf("IJ") != 0) return false
-    else if (str.length != 9) return false
-    else return true
+    else if (str.length == 9 && str.indexOf('-') == -1) return true
+    else if (str.length == 10 && str.indexOf('-') == 2) return true
+    else return false
   }
 
 
@@ -34,9 +37,9 @@ export default class App extends Component {
       Platform: this.state.isSelected,
       time: new Date().toLocaleTimeString()
     }
-    const User = firebase.database().ref("users/" + new Date().toGMTString().slice(5, 11))
+    var user = database.ref("users/" + new Date().toGMTString().slice(5, 11))
     if (this.validate(this.state.Roll_No)) {
-      User.push(postData)
+      user.push(postData)
       Alert.alert("Your Data Have Been Saved Successfully !!")
     }
     else Alert.alert("Please Enter Correct Roll No.")
@@ -57,7 +60,7 @@ export default class App extends Component {
         elevation: 1
       },
       body: {
-        margin: '10%',
+        margin: '0 10% 10% 10%',
         padding: 10,
       },
       btn: {
@@ -65,8 +68,8 @@ export default class App extends Component {
         marginTop: '3%',
       },
       image: {
-        width: '100%',
-        height: 400,
+        width: '70%',
+        height: 300,
         resizeMode: 'stretch'
       }
 
@@ -78,7 +81,7 @@ export default class App extends Component {
         </View>
         <ScrollView>
 
-          <View style={{ marginTop: '23%' }}>
+          <View style={{ marginTop: 100, display: 'flex', alignItems: 'center' }}>
             <Image source={image} style={styles.image} ></Image>
           </View>
           <View style={styles.body}>

@@ -8,9 +8,13 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@react-native-firebase/app": "^12.7.5",
+    "@react-native-firebase/database": "^12.7.5",
     "expo": "~42.0.1",
     "expo-status-bar": "~1.0.4",
-    "firebase": "^8.10.0",
+    "firebase": "8.2.3",
     "native-base": "^3.1.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
